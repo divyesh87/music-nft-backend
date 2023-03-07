@@ -11,13 +11,14 @@ app.get("/", (req, res) => {
   res.sendStatus(200)
 })
 
-app.get("/video", (req, res) => {
+app.get("/video/:videoId", (req, res) => {
+  const id = req.params.videoId;
   const range = req.headers.range;
   console.log("Request received");
   if (!range) {
     res.status(400).send("no range found")
   }
-  const videoPath = path.join(__dirname, "videos/sample1.mp4")
+  const videoPath = path.join(__dirname, `videos/sample${id}.mp4`)
   const videoSize = fs.statSync(videoPath).size;
   const chunkSize = 10 ** 6;
 
